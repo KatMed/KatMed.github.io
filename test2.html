@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XSS Demonstration</title>
-   <img src=a onerror=write(document.cookie)>;
-   <img src=a onerror=write(document.domain)>;
-  <img src=a onerror=alert(document.cookie)>;
-   <img src=a onerror=alert(document.domain)>
 </head>
 <body>
     <h1>XSS Demonstration Page</h1>
+      <img src=a onerror=write(document.cookie)>
+   <img src=a onerror=write(document.domain)>
+  <img src=a onerror=alert(document.cookie)>
+   <img src=a onerror=alert(document.domain)>
     <p>This page displays your cookies in an alert box upon loading.</p>
 </body>
 </html>
