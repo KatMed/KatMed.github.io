@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XSS Demonstration</title>
+    <script>
+        // Display the cookie in an alert window upon page load
+        window.onload = function () {
+            alert('Your cookies: ' + document.cookie);
+        };
+    </script>
+</head>
+<body>
+    <h1>XSS Demonstration Page</h1>
+    <p>This page displays your cookies in an alert box upon loading.</p>
+</body>
+</html>
+.html
