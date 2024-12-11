@@ -14,5 +14,9 @@
 <body>
     <h1>XSS Demonstration Page</h1>
     <p>This page displays your cookies in an alert box upon loading.</p>
+      <!-- Image Source XSS Example -->
+    <h2>5. Image Source Injection</h2>
+    <p>This image tag has a script injection in the `src` attribute.</p>
+    <img src="x" onerror="alert('Image XSS!')" alt="XSS Example">
 </body>
 </html>
