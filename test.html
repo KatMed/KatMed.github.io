@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>iFrame Test Page</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #111827;
+      color: #f9fafb;
+    }
+    .banner {
+      background: #b91c1c;
+      color: white;
+      padding: 14px 20px;
+      font-size: 24px;
+      font-weight: 700;
+      text-align: center;
+    }
+    .wrap {
+      max-width: 980px;
+      margin: 24px auto;
+      padding: 24px;
+      background: #1f2937;
+      border: 1px solid #374151;
+      border-radius: 10px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 10px 16px;
+      margin-top: 16px;
+    }
+    .label {
+      color: #93c5fd;
+      font-weight: 700;
+    }
+    code, pre {
+      background: #0b1220;
+      color: #d1fae5;
+      padding: 8px;
+      border-radius: 6px;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .note {
+      margin-top: 20px;
+      padding: 14px;
+      background: #062b22;
+      border-left: 4px solid #10b981;
+    }
+  </style>
+</head>
+<body>
+  <div class="banner">iFRAME TEST PAGE</div>
+
+  <div class="wrap">
+    <p>This page is intended for authorized security validation only.</p>
+
+    <div class="grid">
+      <div class="label">Loaded at</div>
+      <div id="loadedAt"></div>
+
+      <div class="label">Current URL</div>
+      <code id="href"></code>
+
+      <div class="label">Embedded in iframe</div>
+      <div id="framed"></div>
+
+      <div class="label">Referrer</div>
+      <code id="referrer"></code>
+
+      <div class="label">Top window access</div>
+      <div id="topAccess"></div>
+
+      <div class="label">Origin</div>
+      <code id="origin"></code>
+    </div>
+
+    <div class="note">
+      If this content renders inside the target application, that is visual proof that external content embedding was permitted at that location.
+    </div>
+
+    <h3>Received postMessage data</h3>
+    <pre id="messages">(none)</pre>
+  </div>
+
+  <script>
+    const inFrame = window.self !== window.top;
+    let topAccess = "Unavailable";
+    try {
+      void window.top.location.href;
+      topAccess = "Accessible";
+    } catch (e) {
+      topAccess = "Blocked by same-origin policy";
+    }
+
+    document.getElementById("loadedAt").textContent = new Date().toISOString();
+    document.getElementById("href").textContent = window.location.href;
+    document.getElementById("framed").textContent = inFrame ? "Yes" : "No";
+    document.getElementById("referrer").textContent = document.referrer || "(none)";
+    document.getElementById("topAccess").textContent = topAccess;
+    document.getElementById("origin").textContent = window.location.origin;
+
+    const messages = [];
+    window.addEventListener("message", (event) => {
+      messages.push({
+        origin: event.origin,
+        data: event.data,
+        time: new Date().toISOString()
+      });
+      document.getElementById("messages").textContent =
+        JSON.stringify(messages, null, 2);
+    });
+
+    console.log("Authorized embed test page loaded", {
+      href: window.location.href,
+      referrer: document.referrer,
+      inFrame
+    });
+  </script>
+  <script>alert('K Test');</script>
+  <img src=a onerror=alert(111)>
+</body>
+</html>
